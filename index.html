@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pigeon Race Results</title>
   <style>
-    /* Basic styling */
     body { font-family: Arial, sans-serif; text-align: center; }
     h1 { font-size: 2.5em; margin: 20px 0; }
     h2 { font-size: 1.5em; margin: 10px 0; }
@@ -15,6 +14,8 @@
     .results-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
     .results-table th, .results-table td { border: 1px solid #ddd; padding: 8px; }
     #search { padding: 10px; width: 250px; font-size: 1em; margin-top: 20px; }
+    #dateToday { font-size: 1em; margin-top: 20px; }
+    #lastUpdateTime { font-size: 1em; margin-top: 5px; }
   </style>
 </head>
 <body>
@@ -22,13 +23,20 @@
   <!-- Header -->
   <h1>BBC Cavite - Laguna</h1>
   <h2>Unofficial Race Results</h2>
+  <p id="dateToday"></p>
+  <p id="lastUpdateTime"></p>
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab" onclick="loadRaceData('FR2')">FR2</div>
-    <div class="tab" onclick="loadRaceData('DERBY')">DERBY</div>
     <div class="tab" onclick="loadRaceData('OC300')">OC300</div>
-    <div class="tab" onclick="loadRaceData('KO200')">KO200</div>
+    <div class="tab" onclick="loadRaceData('KO200_6L')">KO200 6 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO500_6L')">KO500 6 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO1K_6L')">KO1K 6 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO2K_6L')">KO2K 6 Laps</div>
+    <div class="tab" onclick="loadRaceData('70K')">70K 5 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO200_5L')">KO200 5 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO500_5L')">KO500 5 Laps</div>
+    <div class="tab" onclick="loadRaceData('KO1K_5L')">KO1K 5 Laps</div>
   </div>
 
   <!-- Search bar -->
@@ -45,186 +53,88 @@
   </table>
 
   <script>
-    const apiKey = 'AIzaSyDnQPBVIY-hChWThux9R8WknqvuDHsDFog';
-    const fr2SheetId = '1LG-kopayUmKGoAkmTHm5mrf2rXFc1jpBHuY5QhehG9Y';
-    const fr2Range = 'FR2!A3:L746';
-    const derbySheetId = '1tBO1BNj7r_QzXrKRfC679Tv_gaguxq0mcVTRsqnasLg';
-    const derbyRange = 'NDR DERBY!A3:J1431';
-    const oc300SheetId = '1JvFzsSy7ch-mj6Og_3RrFp__0V6um0NpDsO6XrI3OpM';
-    const oc300Range = 'OC300!A3:J83';
-    const ko200SheetId = '1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ';
-    const ko200Range = 'KO200!A3:J83';
-
+    const apiKey = 'AIzaSyDnQPBVIY-hChWThux9R8WknqvuDHsDFog';  // Replace with your actual Google Sheets API key
     const raceDataUrls = {
-      FR2: `https://sheets.googleapis.com/v4/spreadsheets/${fr2SheetId}/values/${fr2Range}?key=${apiKey}`,
-      DERBY: `https://sheets.googleapis.com/v4/spreadsheets/${derbySheetId}/values/${derbyRange}?key=${apiKey}`,
-      OC300: `https://sheets.googleapis.com/v4/spreadsheets/${oc300SheetId}/values/${oc300Range}?key=${apiKey}`,
-      KO200: `https://sheets.googleapis.com/v4/spreadsheets/${ko200SheetId}/values/${ko200Range}?key=${apiKey}`,
+      OC300: 'https://sheets.googleapis.com/v4/spreadsheets/1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ/values/OC300!A3:J83?key=' + apiKey,
+      KO200_6L: 'https://sheets.googleapis.com/v4/spreadsheets/1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ/values/KO200!A3:J83?key=' + apiKey,
+      KO500_6L: 'https://sheets.googleapis.com/v4/spreadsheets/1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ/values/KO500!A3:J44?key=' + apiKey,
+      KO1K_6L: 'https://sheets.googleapis.com/v4/spreadsheets/1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ/values/KO1K!A3:J14?key=' + apiKey,
+      KO2K_6L: 'https://sheets.googleapis.com/v4/spreadsheets/1FrRKiQzuPzrgwFWnt7su79v77A8l5w9FQzU0S0bU8rQ/values/KO2K!A3:J5?key=' + apiKey,
+      '70K': 'https://sheets.googleapis.com/v4/spreadsheets/1sYMtpbNYTprx2INESiuwIVU8aIb9Ng1lHr38Y3MUduo/values/70K!A3:I437?key=' + apiKey,
+      KO200_5L: 'https://sheets.googleapis.com/v4/spreadsheets/1sYMtpbNYTprx2INESiuwIVU8aIb9Ng1lHr38Y3MUduo/values/KO200!A3:I79?key=' + apiKey,
+      KO500_5L: 'https://sheets.googleapis.com/v4/spreadsheets/1sYMtpbNYTprx2INESiuwIVU8aIb9Ng1lHr38Y3MUduo/values/KO500!A3:I16?key=' + apiKey,
+      KO1K_5L: 'https://sheets.googleapis.com/v4/spreadsheets/1sYMtpbNYTprx2INESiuwIVU8aIb9Ng1lHr38Y3MUduo/values/KO1K!A3:I8?key=' + apiKey,
     };
 
     const tableHeaders = {
-      FR2: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Lap 7', 'Total Speed'],
-      DERBY: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
       OC300: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
-      KO200: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
+      KO200_6L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
+      KO500_6L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
+      KO1K_6L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
+      KO2K_6L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Lap 6', 'Total Speed'],
+      '70K': ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Total Speed'],
+      KO200_5L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Total Speed'],
+      KO500_5L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Total Speed'],
+      KO1K_5L: ['Rank', 'Player Name', 'Pigeon ID', 'Lap 1', 'Lap 2', 'Lap 3', 'Lap 4', 'Lap 5', 'Total Speed'],
     };
 
     function loadRaceData(race) {
-      // Update active tab
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelector(`.tab[onclick="loadRaceData('${race}')"]`).classList.add('active');
 
-      // Handle data for each race
-      if (race === 'FR2') {
-        loadFR2Data();
-      } else if (race === 'DERBY') {
-        loadDerbyData();
-      } else if (race === 'OC300') {
-        loadOc300Data();
-      } else if (race === 'KO200') {
-        loadKo200Data();
-      } else {
-        document.getElementById('tableHeader').innerHTML = '<tr><th>Data not available for this race</th></tr>';
-        document.getElementById('resultsBody').innerHTML = '';
-      }
-    }
+      const headers = tableHeaders[race];
+      document.getElementById('tableHeader').innerHTML = `<tr>${headers.map(header => `<th>${header}</th>`).join('')}</tr>`;
 
-    function loadFR2Data() {
-      // Set table headers for FR2
-      const headers = tableHeaders['FR2'];
-      const headerRow = headers.map(header => `<th>${header}</th>`).join('');
-      document.getElementById('tableHeader').innerHTML = `<tr>${headerRow}</tr>`;
-
-      // Fetch data for FR2
-      fetch(raceDataUrls['FR2'])
+      fetch(raceDataUrls[race])
         .then(response => response.json())
         .then(data => {
           const rows = data.values || [];
-
-          // Clear existing data
-          document.getElementById('resultsBody').innerHTML = '';
-
-          // Populate table with new data
-          rows.forEach(rowData => {
-            const newRow = document.createElement('tr');
-            rowData.forEach(data => {
-              const cell = document.createElement('td');
-              cell.textContent = data;
-              newRow.appendChild(cell);
-            });
-            document.getElementById('resultsBody').appendChild(newRow);
-          });
+          const resultsTableBody = document.getElementById('resultsBody');
+          resultsTableBody.innerHTML = rows.map(row => 
+            `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+          ).join('');
+          updateDate();
         })
-        .catch(error => console.error('Error fetching FR2 data:', error));
+        .catch(error => {
+          console.error('Error fetching race data:', error);
+        });
     }
 
-    function loadDerbyData() {
-      // Set table headers for DERBY
-      const headers = tableHeaders['DERBY'];
-      const headerRow = headers.map(header => `<th>${header}</th>`).join('');
-      document.getElementById('tableHeader').innerHTML = `<tr>${headerRow}</tr>`;
-
-      // Fetch data for DERBY
-      fetch(raceDataUrls['DERBY'])
-        .then(response => response.json())
-        .then(data => {
-          const rows = data.values || [];
-
-          // Clear existing data
-          document.getElementById('resultsBody').innerHTML = '';
-
-          // Populate table with new data
-          rows.forEach(rowData => {
-            const newRow = document.createElement('tr');
-            rowData.forEach(data => {
-              const cell = document.createElement('td');
-              cell.textContent = data;
-              newRow.appendChild(cell);
-            });
-            document.getElementById('resultsBody').appendChild(newRow);
-          });
-        })
-        .catch(error => console.error('Error fetching DERBY data:', error));
-    }
-
-    function loadOc300Data() {
-      // Set table headers for OC300
-      const headers = tableHeaders['OC300'];
-      const headerRow = headers.map(header => `<th>${header}</th>`).join('');
-      document.getElementById('tableHeader').innerHTML = `<tr>${headerRow}</tr>`;
-
-      // Fetch data for OC300
-      fetch(raceDataUrls['OC300'])
-        .then(response => response.json())
-        .then(data => {
-          const rows = data.values || [];
-
-          // Clear existing data
-          document.getElementById('resultsBody').innerHTML = '';
-
-          // Populate table with new data
-          rows.forEach(rowData => {
-            const newRow = document.createElement('tr');
-            rowData.forEach(data => {
-              const cell = document.createElement('td');
-              cell.textContent = data;
-              newRow.appendChild(cell);
-            });
-            document.getElementById('resultsBody').appendChild(newRow);
-          });
-        })
-        .catch(error => console.error('Error fetching OC300 data:', error));
-    }
-
-    function loadKo200Data() {
-      // Set table headers for KO200
-      const headers = tableHeaders['KO200'];
-      const headerRow = headers.map(header => `<th>${header}</th>`).join('');
-      document.getElementById('tableHeader').innerHTML = `<tr>${headerRow}</tr>`;
-
-      // Fetch data for KO200
-      fetch(raceDataUrls['KO200'])
-        .then(response => response.json())
-        .then(data => {
-          const rows = data.values || [];
-
-          // Clear existing data
-          document.getElementById('resultsBody').innerHTML = '';
-
-          // Populate table with new data
-          rows.forEach(rowData => {
-            const newRow = document.createElement('tr');
-            rowData.forEach(data => {
-              const cell = document.createElement('td');
-              cell.textContent = data;
-              newRow.appendChild(cell);
-            });
-            document.getElementById('resultsBody').appendChild(newRow);
-          });
-        })
-        .catch(error => console.error('Error fetching KO200 data:', error));
-    }
+    function updateDate() {
+  const today = new Date();
+  const dateString = today.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  const timeString = today.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+  document.getElementById('dateToday').innerText = `Last Update: ${dateString}`;
+  document.getElementById('lastUpdateTime').innerText = timeString;
+}
 
     function filterResults() {
-      const searchValue = document.getElementById('search').value.toLowerCase();
+      const searchQuery = document.getElementById('search').value.toLowerCase();
       const rows = document.querySelectorAll('#resultsBody tr');
-      
       rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        let matches = false;
-        
-        cells.forEach(cell => {
-          if (cell.textContent.toLowerCase().includes(searchValue)) {
-            matches = true;
+        const cells = row.getElementsByTagName('td');
+        let rowVisible = false;
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent.toLowerCase().includes(searchQuery)) {
+            rowVisible = true;
+            break;
           }
-        });
-        
-        row.style.display = matches ? '' : 'none';
+        }
+        row.style.display = rowVisible ? '' : 'none';
       });
     }
 
-    // Default load FR2 data on page load
-    loadRaceData('FR2');
+    window.onload = function() {
+      loadRaceData('OC300');
+    };
   </script>
 
 </body>
