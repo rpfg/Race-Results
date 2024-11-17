@@ -5,105 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BBC Cavite Laguna - Race Results</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
-  
-    /* Header Style */
-    header {
-      background-color: black;
-      background-image: url('https://raw.githubusercontent.com/rpfg/Race-Results/refs/heads/main/Images/BBC.png'); 
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 25vh; /* Dynamic height based on viewport */
-    }
-  
-    nav { margin: 20px 0; }
-    nav a { font-size: 1.2em; margin: 10px 20px; color: #004d00; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-  
-    .tabs { 
-      display: flex; 
-      flex-wrap: wrap;
-      justify-content: center; 
-      margin-top: 20px; 
-      transition: all 0.3s ease;
-    }
-    .tab { 
-      padding: 10px 20px; 
-      cursor: pointer; 
-      text-align: center;
-      margin: 5px; 
-      border: 1px solid #ddd; 
-      background-color: #f4f4f4;
-      border-radius: 25px; /* Round the edges of the tabs */
-      transition: background-color 0.3s ease;
-    }
-    .tab:hover {
-      background-color: #dcdcdc;
-    }
-    .tab.active { 
-      color: white; 
-      background-color: green; 
-      border-radius: 25px; /* Ensure active tab is also rounded */
-    }
-  
-        .results-table { 
-      width: 100%; 
-      margin-top: 20px; 
-      border-collapse: collapse; 
-    }
-    .results-table th, .results-table td { 
-      border: 1px solid #ddd; 
-      padding: 8px; 
-    }
-    /* Table Header Styling */
-    .results-table th {
-        background-color: #004d00; /* Dark green */
-        color: white; /* White text */
-        text-align: center; /* Center align text */
-        padding: 10px; /* Add padding for spacing */
-    }
-    /* Set row height */
-.results-table tr {
-  height: 60px; /* Adjust the height as needed */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-    /* Alternate row colors */
-    .results-table tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
+/* Header Style */
+header {
+  background-color: black;
+  background-image: url('https://raw.githubusercontent.com/rpfg/Race-Results/refs/heads/main/Images/BBC.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 25vh; /* Dynamic height based on viewport */
+}
 
-    .results-table tr:nth-child(odd) {
-      background-color: #ffffff;
-    }
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+  margin-top: 20px;
+}
 
-    .results-table tr:hover {
-      background-color: #dcdcdc;
-    }
-  
-    #search { 
-      padding: 10px; 
-      width: 90%; 
-      max-width: 300px;
-      font-size: 1em; 
-      margin-top: 20px; 
-    }
-    #dateToday { 
-      font-size: 1em; 
-      margin-top: 20px; 
-    }
-    #noDataMessage { 
-      color: red; 
-      font-size: 1.2em; 
-      margin-top: 20px;
-    }
-    #loadingIndicator img {
-    width: 150px;
-    height: auto;
+.tab {
+  padding: 15px 20px;
+  margin: 5px;
+  font-size: 1.2em;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  background: linear-gradient(to bottom, #f0f0f0, #d4d4d4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tab:active {
+  background: linear-gradient(to bottom, #d4d4d4, #f0f0f0);
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tab.active {
+  background: linear-gradient(to bottom, #004d00, #007300);
+  color: white;
+  border: 1px solid #003a00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+
+#search {
+  padding: 10px;
+  width: 90%;
+  max-width: 300px;
+  font-size: 1em;
+  margin-top: 20px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+#search:focus {
+  border-color: #004d00;
+  box-shadow: 0 0 5px rgba(0, 77, 0, 0.5);
+}
+
+.results-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensure uniform column width */
+  max-height: 400px; /* Limit the height of the table */
+  overflow-y: auto; /* Allow vertical scroll if table exceeds max-height */
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.results-table th {
+  background-color: #004d00;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .tab {
+    font-size: 1em;
+    padding: 10px 15px;
+    margin: 3px;
   }
-  
-    .footer { background-color: #004d00; color: white; padding: 10px 0; margin-top: 30px; position: relative; bottom: 0; width: 100%; }
-    .footer p { font-size: 1em; }
+
+  .tabs {
+    flex-direction: column; /* Stack tabs vertically on small screens */
+  }
+}
+
+/* Table Row Styles */
+.results-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.results-table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.results-table tr:hover {
+  background-color: #dcdcdc;
+}
+
+/* No Data Message */
+#noDataMessage {
+  color: red;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+#loadingIndicator img {
+  width: 150px;
+  height: auto;
+}
+
+/* Footer */
+.footer {
+  background-color: #004d00;
+  color: white;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer p {
+  font-size: 1rem;
+}
+
+/* Custom scrollbar (for tables and other scrollable elements) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+
   </style>
   
 </head>
@@ -130,6 +195,7 @@
     <div class="tab" id="tabTC50K_3L" onclick="loadRaceData('TC50K_3L')">TC50K 3 Laps</div>
     <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
     <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
+    
   </div>
 
   <!-- Search bar -->
@@ -297,6 +363,7 @@ function sortTable(columnIndex) {
   // Reorder the rows in the table based on sorted data
   rows.forEach(row => tableBody.appendChild(row));
 }
+
 
 
 
