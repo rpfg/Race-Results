@@ -14,7 +14,7 @@
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
-      height: 400px;
+      height: 25vh; /* Dynamic height based on viewport */
     }
   
     nav { margin: 20px 0; }
@@ -83,7 +83,8 @@
   
     #search { 
       padding: 10px; 
-      width: 250px; 
+      width: 90%; 
+      max-width: 300px;
       font-size: 1em; 
       margin-top: 20px; 
     }
@@ -101,7 +102,7 @@
     height: auto;
   }
   
-    .footer { background-color: #004d00; color: white; padding: 10px 0; margin-top: 30px; }
+    .footer { background-color: #004d00; color: white; padding: 10px 0; margin-top: 30px; position: relative; bottom: 0; width: 100%; }
     .footer p { font-size: 1em; }
   </style>
   
@@ -201,25 +202,26 @@
     }
 
     function filterResults() {
-  const searchTerm = document.getElementById('search').value.toLowerCase(); // Get the input and convert to lowercase
-  const rows = document.getElementById('resultsBody').rows; // Get all rows in the results table
+  const searchTerm = document.getElementById('search').value.toLowerCase(); // Get the search term
+  const tableBody = document.getElementById('resultsBody');
+  const rows = Array.from(tableBody.rows); // Cache rows in an array
 
   let hasResults = false; // Track if any rows match the search
 
-  for (let row of rows) {
-    const cells = Array.from(row.cells); // Get all cells in the row
-    const matches = cells.some(cell => cell.innerText.toLowerCase().includes(searchTerm)); // Check if any cell contains the search term
-    if (matches) {
-      row.style.display = ''; // Show row if it matches
+  rows.forEach(row => {
+    const rowText = Array.from(row.cells).map(cell => cell.innerText.toLowerCase()).join(' '); // Combine all cell text in the row
+    if (rowText.includes(searchTerm)) {
+      row.style.display = ''; // Show matching rows
       hasResults = true;
     } else {
-      row.style.display = 'none'; // Hide row if it doesn't match
+      row.style.display = 'none'; // Hide non-matching rows
     }
-  }
+  });
 
-  // Display 'No Data' message if no results match the search term
+  // Show or hide the "No Data" message
   document.getElementById('noDataMessage').style.display = hasResults ? 'none' : 'block';
 }
+
 
 
     function displayRaceResults(data) {
