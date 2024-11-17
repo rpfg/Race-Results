@@ -31,7 +31,7 @@ header {
 }
 
 .tab {
-  padding: 15px 20px;
+  padding: 8px 12px;
   margin: 5px;
   font-size: 1.2em;
   text-align: center;
@@ -84,6 +84,7 @@ header {
   table-layout: fixed; /* Ensure uniform column width */
   max-height: 400px; /* Limit the height of the table */
   overflow-y: auto; /* Allow vertical scroll if table exceeds max-height */
+  display: block; /* Makes the table scrollable on smaller screens */
 }
 
 .results-table th,
@@ -101,12 +102,27 @@ header {
 @media (max-width: 600px) {
   .tab {
     font-size: 1em;
-    padding: 10px 15px;
+    padding: 8px 12px;
     margin: 3px;
   }
-
+  
+  @media (max-width: 600px) {
   .tabs {
-    flex-direction: column; /* Stack tabs vertically on small screens */
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    gap: 15px; /* Add space between the tabs */
+    justify-content: center;
+  }
+
+  .tab {
+    font-size: 1em; /* Adjust font size for smaller screens */
+    padding: 10px; /* Adjust padding to fit better */
+  }
+}
+
+@media (max-width: 600px) {
+  #loadingIndicator img {
+    width: 100px; /* Scale down for smaller screens */
   }
 }
 
@@ -311,12 +327,12 @@ header {
 
 
 
-    function displayRaceResults(data) {
+function displayRaceResults(data) {
   const tableHeader = document.getElementById('tableHeader');
   const tableBody = document.getElementById('resultsBody');
   tableBody.innerHTML = '';
   tableHeader.innerHTML = '';
-  
+
   if (data && data.length > 0) {
     const headers = data[0];
     const headerRow = document.createElement('tr');
@@ -324,11 +340,9 @@ header {
     headers.forEach((header, index) => {
       const th = document.createElement('th');
       th.innerText = header;
-
-      // Add sort functionality to all columns
       th.style.cursor = 'pointer';
       th.onclick = () => sortTable(index);
-      
+
       headerRow.appendChild(th);
     });
     
@@ -342,12 +356,34 @@ header {
       });
       tableBody.appendChild(tableRow);
     });
-    
+
     document.getElementById('noDataMessage').style.display = 'none';
   } else {
     document.getElementById('noDataMessage').style.display = 'block';
   }
 }
+
+function sortTable(columnIndex) {
+  // Sorting logic
+  currentSortOrder = currentSortColumn === columnIndex && currentSortOrder === 'asc' ? 'desc' : 'asc';
+  currentSortColumn = columnIndex;
+
+  const tableBody = document.getElementById('resultsBody');
+  const rows = Array.from(tableBody.rows);
+
+  rows.sort((rowA, rowB) => {
+    const cellA = rowA.cells[columnIndex].innerText.trim();
+    const cellB = rowB.cells[columnIndex].innerText.trim();
+
+    const valueA = isNaN(cellA) ? cellA : parseFloat(cellA);
+    const valueB = isNaN(cellB) ? cellB : parseFloat(cellB);
+
+    return currentSortOrder === 'asc' ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
+  });
+
+  rows.forEach(row => tableBody.appendChild(row));
+}
+
 
 
 let currentSortColumn = -1; // To keep track of the column currently sorted
