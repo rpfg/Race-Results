@@ -132,7 +132,8 @@
   </div>
 
   <!-- Search bar -->
-  <input type="text" id="search" placeholder="Search..." oninput="filterResults()">
+<input type="text" id="search" placeholder="Search..." oninput="filterResults()">
+
 
   <!-- Loading Indicator -->
   <div id="loadingIndicator" style="display: none;">
@@ -198,6 +199,28 @@
           document.getElementById('loadingIndicator').style.display = 'none'; // Hide loading indicator
         });
     }
+
+    function filterResults() {
+  const searchTerm = document.getElementById('search').value.toLowerCase(); // Get the input and convert to lowercase
+  const rows = document.getElementById('resultsBody').rows; // Get all rows in the results table
+
+  let hasResults = false; // Track if any rows match the search
+
+  for (let row of rows) {
+    const cells = Array.from(row.cells); // Get all cells in the row
+    const matches = cells.some(cell => cell.innerText.toLowerCase().includes(searchTerm)); // Check if any cell contains the search term
+    if (matches) {
+      row.style.display = ''; // Show row if it matches
+      hasResults = true;
+    } else {
+      row.style.display = 'none'; // Hide row if it doesn't match
+    }
+  }
+
+  // Display 'No Data' message if no results match the search term
+  document.getElementById('noDataMessage').style.display = hasResults ? 'none' : 'block';
+}
+
 
     function displayRaceResults(data) {
   const tableHeader = document.getElementById('tableHeader');
