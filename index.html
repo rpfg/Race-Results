@@ -30,6 +30,41 @@ header {
   margin-top: 20px;
 }
 
+.tabs-container {
+  display: flex; /* Use flexbox to position tabs side by side */
+  justify-content: center; /* Centers the tabs */
+  align-items: center; /* Vertically centers the tabs */
+}
+
+.home-tab, .race-results-tab {
+      padding: 8px 12px;
+      margin-right: 20px;
+      font-size: 1.2em;
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+.home-tab:hover, .race-results-tab:hover {
+  background: #d3d3d3; /* Same hover effect */
+}
+
+/* Optional: remove the margin for the last tab */
+.tabs-container .race-results-tab {
+  margin-right: 0;
+}
+
+    /* Tabs */
+    .tabs-container {
+      display: block;
+      margin-top: 20px;
+    }
+
 .tab {
   padding: 8px 12px;
   margin: 5px;
@@ -40,6 +75,12 @@ header {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.home-tab:hover {
+  background: linear-gradient(to bottom, #f0f0f0, #d4d4d4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .tab:hover {
@@ -63,6 +104,8 @@ header {
 }
 
 
+
+
 #search {
   padding: 10px;
   width: 90%;
@@ -80,12 +123,12 @@ header {
 .results-table {
   width: 100%;
   max-width: 1200px; /* Maximum width for larger screens */
-  margin: 20px auto; /* Center the table */
+  margin: 20px auto; /* This will center the table horizontally */
   border-collapse: collapse;
   overflow-x: auto; /* Allow horizontal scrolling on small screens */
   display: block; /* Display table as block for better responsiveness */
   font-size: 1em;
-  table-layout: auto; /* Allow the table to adjust column width automatically */
+  table-layout: center; /* Allow the table to adjust column width automatically */
 }
 
 .results-table th, .results-table td {
@@ -216,6 +259,7 @@ header {
     footer a:hover {
       text-decoration: underline;
     }
+  
 
 
 
@@ -227,27 +271,54 @@ header {
   <!-- Header Section (only background image) -->
   <header></header>
   
+  
+<!-- Main Content -->
+<div class="content">
   <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab" id="tabFR2" onclick="loadRaceData('FR2')">FR2</div>
-    <div class="tab" id="tabDerby" onclick="loadRaceData('Derby')">Derby</div>
-    <div class="tab" id="tabOC300" onclick="loadRaceData('OC300')">OC300</div>
-    <div class="tab" id="tabKO200_6L" onclick="loadRaceData('KO200_6L')">KO200 6 Laps</div>
-    <div class="tab" id="tabKO500_6L" onclick="loadRaceData('KO500_6L')">KO500 6 Laps</div>
-    <div class="tab" id="tabKO1K_6L" onclick="loadRaceData('KO1K_6L')">KO1K 6 Laps</div>
-    <div class="tab" id="tabKO2K_6L" onclick="loadRaceData('KO2K_6L')">KO2K 6 Laps</div>
-    <div class="tab" id="tab70K" onclick="loadRaceData('70K')">70K</div>
-    <div class="tab" id="tabKO200_5L" onclick="loadRaceData('KO200_5L')">KO200 5 Laps</div>
-    <div class="tab" id="tabKO500_5L" onclick="loadRaceData('KO500_5L')">KO500 5 Laps</div>
-    <div class="tab" id="tabKO1K_5L" onclick="loadRaceData('KO1K_5L')">KO1K 5 Laps</div>
-    <div class="tab" id="tab50K" onclick="loadRaceData('50K')">50K</div>
-    <div class="tab" id="tabKO200_4L" onclick="loadRaceData('KO200_4L')">KO200 4 Laps</div>
-    <div class="tab" id="tabTC50K_3L" onclick="loadRaceData('TC50K_3L')">TC50K 3 Laps</div>
-    <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
-    <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
-    
+  <div class="tabs-container">
+    <a href="https://rpfg.github.io/BBCHomePage/" target="_self" style="color: inherit; text-decoration: none;">
+      <div class="home-tab">Home</div>
+    </a>
+    <a href="https://rpfg.github.io/Race-Results/" target="_self" style="color: inherit; text-decoration: none;">
+      <div class="race-results-tab">Race Results</div>
+    </a>
   </div>
+</div>
 
+  
+  
+<div class="tabs">
+  <div class="tab" id="tabFR2" onclick="loadRaceData('FR2')">FR2</div>
+  <div class="tab" id="tabDerby" onclick="loadRaceData('Derby')">Derby</div>
+  <div class="tab" id="tabOC300" onclick="loadRaceData('OC300')">OC300</div>
+  <div class="tab" id="tabKO200_6L" onclick="loadRaceData('KO200_6L')">KO200 6 Laps</div>
+  <div class="tab" id="tabKO500_6L" onclick="loadRaceData('KO500_6L')">KO500 6 Laps</div>
+  <div class="tab" id="tabKO1K_6L" onclick="loadRaceData('KO1K_6L')">KO1K 6 Laps</div>
+  <div class="tab" id="tabKO2K_6L" onclick="loadRaceData('KO2K_6L')">KO2K 6 Laps</div>
+  <div class="tab" id="tab70K" onclick="loadRaceData('70K')">70K</div>
+  <div class="tab" id="tabKO200_5L" onclick="loadRaceData('KO200_5L')">KO200 5 Laps</div>
+  <div class="tab" id="tabKO500_5L" onclick="loadRaceData('KO500_5L')">KO500 5 Laps</div>
+  <div class="tab" id="tabKO1K_5L" onclick="loadRaceData('KO1K_5L')">KO1K 5 Laps</div>
+  <div class="tab" id="tab50K" onclick="loadRaceData('50K')">50K</div>
+  <div class="tab" id="tabKO200_4L" onclick="loadRaceData('KO200_4L')">KO200 4 Laps</div>
+  <div class="tab" id="tabTC50K_3L" onclick="loadRaceData('TC50K_3L')">TC50K 3 Laps</div>
+  <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
+  <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
+</div>
+
+<div class="results-table-container">
+  <table class="results-table" id="resultsTable">
+    <thead id="tableHeader">
+      <!-- Table headers will be dynamically inserted here -->
+    </thead>
+    <tbody id="resultsBody">
+      <!-- Results will be loaded here -->
+    </tbody>
+  </table>
+</div>
+
+
+  <p id="entryCount" style="margin-top: 10px; font-size: 1.1em; font-weight: normal;"></p>
 
   <!-- Search bar -->
 <input type="text" id="search" placeholder="Search..." oninput="filterResults()">
@@ -342,6 +413,10 @@ header {
   document.getElementById('noDataMessage').style.display = hasResults ? 'none' : 'block';
 }
 
+function loadHome() {
+  // For now, this can redirect to the homepage or display something else
+  window.location.href = '/'; // Link to your homepage
+}
 
 
 function displayRaceResults(data) {
@@ -379,6 +454,47 @@ function displayRaceResults(data) {
     document.getElementById('noDataMessage').style.display = 'block';
   }
 }
+
+function displayRaceResults(data) {
+  const tableHeader = document.getElementById('tableHeader');
+  const tableBody = document.getElementById('resultsBody');
+  const entryCount = document.getElementById('entryCount'); // Add an element to show the count
+  tableBody.innerHTML = '';
+  tableHeader.innerHTML = '';
+
+  if (data && data.length > 0) {
+    const headers = data[0];
+    const headerRow = document.createElement('tr');
+    
+    headers.forEach((header, index) => {
+      const th = document.createElement('th');
+      th.innerText = header;
+      th.style.cursor = 'pointer';
+      th.onclick = () => sortTable(index);
+
+      headerRow.appendChild(th);
+    });
+    
+    tableHeader.appendChild(headerRow);
+    data.slice(1).forEach(row => {
+      const tableRow = document.createElement('tr');
+      row.forEach(cell => {
+        const td = document.createElement('td');
+        td.innerText = cell;
+        tableRow.appendChild(td);
+      });
+      tableBody.appendChild(tableRow);
+    });
+
+    // Display the number of entries
+    entryCount.innerText = `Number of Entries: ${data.length - 1}`; // Subtract 1 for the header row
+    document.getElementById('noDataMessage').style.display = 'none';
+  } else {
+    document.getElementById('noDataMessage').style.display = 'block';
+    entryCount.innerText = ''; // Clear the entry count if no data
+  }
+}
+
 
 function sortTable(columnIndex) {
   // Sorting logic
