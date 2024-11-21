@@ -285,7 +285,8 @@ header {
   </div>
 </div>
 
-  
+
+
   
 <div class="tabs">
   <div class="tab" id="tabFR2" onclick="loadRaceData('FR2')">FR2</div>
@@ -305,6 +306,11 @@ header {
   <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
   <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
 </div>
+
+<p id="entryCount" style="margin-top: 10px; font-size: 1.1em; font-weight: normal;"></p>
+
+<!-- Search bar -->
+<input type="text" id="search" placeholder="Search..." oninput="filterResults()">
 
 <div class="results-table-container">
   <table class="results-table" id="resultsTable">
