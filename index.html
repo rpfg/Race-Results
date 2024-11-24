@@ -285,29 +285,30 @@ header {
   </div>
 </div>
 
-
-
-  
 <div class="tabs">
-  <div class="tab" id="tabFR2" onclick="loadRaceData('FR2')">FR2</div>
-  <div class="tab" id="tabDerby" onclick="loadRaceData('Derby')">Derby</div>
-  <div class="tab" id="tabOC300" onclick="loadRaceData('OC300')">OC300</div>
-  <div class="tab" id="tabKO200_6L" onclick="loadRaceData('KO200_6L')">KO200 6 Laps</div>
-  <div class="tab" id="tabKO500_6L" onclick="loadRaceData('KO500_6L')">KO500 6 Laps</div>
-  <div class="tab" id="tabKO1K_6L" onclick="loadRaceData('KO1K_6L')">KO1K 6 Laps</div>
-  <div class="tab" id="tabKO2K_6L" onclick="loadRaceData('KO2K_6L')">KO2K 6 Laps</div>
-  <div class="tab" id="tab70K" onclick="loadRaceData('70K')">70K</div>
-  <div class="tab" id="tabKO200_5L" onclick="loadRaceData('KO200_5L')">KO200 5 Laps</div>
-  <div class="tab" id="tabKO500_5L" onclick="loadRaceData('KO500_5L')">KO500 5 Laps</div>
-  <div class="tab" id="tabKO1K_5L" onclick="loadRaceData('KO1K_5L')">KO1K 5 Laps</div>
-  <div class="tab" id="tab50K" onclick="loadRaceData('50K')">50K</div>
-  <div class="tab" id="tabKO200_4L" onclick="loadRaceData('KO200_4L')">KO200 4 Laps</div>
-  <div class="tab" id="tabTC50K_3L" onclick="loadRaceData('TC50K_3L')">TC50K 3 Laps</div>
-  <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
-  <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
-</div>
+    <div class="tab" id="tabFR2" onclick="loadRaceData('FR2')">FR2</div>
+    <div class="tab" id="tabDerby" onclick="loadRaceData('Derby')">Derby</div>
+    <div class="tab" id="tabOC300" onclick="loadRaceData('OC300')">OC300</div>
+    <div class="tab" id="tabKO200_6L" onclick="loadRaceData('KO200_6L')">KO200 6 Laps</div>
+    <div class="tab" id="tabKO500_6L" onclick="loadRaceData('KO500_6L')">KO500 6 Laps</div>
+    <div class="tab" id="tabKO1K_6L" onclick="loadRaceData('KO1K_6L')">KO1K 6 Laps</div>
+    <div class="tab" id="tabKO2K_6L" onclick="loadRaceData('KO2K_6L')">KO2K 6 Laps</div>
+    <div class="tab" id="tab70K" onclick="loadRaceData('70K')">70K</div>
+    <div class="tab" id="tabKO200_5L" onclick="loadRaceData('KO200_5L')">KO200 5 Laps</div>
+    <div class="tab" id="tabKO500_5L" onclick="loadRaceData('KO500_5L')">KO500 5 Laps</div>
+    <div class="tab" id="tabKO1K_5L" onclick="loadRaceData('KO1K_5L')">KO1K 5 Laps</div>
+    <div class="tab" id="tab50K" onclick="loadRaceData('50K')">50K</div>
+    <div class="tab" id="tabKO200_4L" onclick="loadRaceData('KO200_4L')">KO200 4 Laps</div>
+    <div class="tab" id="tabTC50K_3L" onclick="loadRaceData('TC50K_3L')">TC50K 3 Laps</div>
+    <div class="tab" id="tabKO200_3L" onclick="loadRaceData('KO200_3L')">KO200 3 Laps</div>
+    <div class="tab" id="tabKO500_3L" onclick="loadRaceData('KO500_3L')">KO500 3 Laps</div>
+    <div class="tab" id="tabKO1K_3L" onclick="loadRaceData('KO1K_3L')">KO1K 3 Laps</div>
+    <div class="tab" id="tabKO2K_3L" onclick="loadRaceData('KO2K_3L')">KO2K 3 Laps</div>
+    <div class="tab" id="tabPatibayan1" onclick="loadRaceData('Patibayan1')">Patibayan 1</div>
+    <div class="tab" id="tabPatibayan2" onclick="loadRaceData('Patibayan2')">Patibayan 2</div>
+    
+  </div>
 
-<p id="entryCount" style="margin-top: 10px; font-size: 1.1em; font-weight: normal;"></p>
 
 <!-- Search bar -->
 <input type="text" id="search" placeholder="Search..." oninput="filterResults()">
@@ -324,10 +325,6 @@ header {
 </div>
 
 
-  <p id="entryCount" style="margin-top: 10px; font-size: 1.1em; font-weight: normal;"></p>
-
-  <!-- Search bar -->
-<input type="text" id="search" placeholder="Search..." oninput="filterResults()">
 
 
   <!-- Loading Indicator -->
@@ -345,7 +342,7 @@ header {
     </tbody>
   </table>
 
-  <p id="noDataMessage" style="display:none;">No Data</p>
+  <p id="noDataMessage" style="display:none;">Congrats !!!</p>
 
   <!-- Footer -->
   <footer>
@@ -371,6 +368,10 @@ header {
       '50K': 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/50K4!A2:H?key=' + apiKey,
       KO200_4L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/KO2004!A2:I?key=' + apiKey,
       TC50K_3L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/TC50K3!A2:I?key=' + apiKey,
+      KO200_3L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/KO2003!A2:G?key=' + apiKey,
+      KO500_3L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/KO5003!A2:G?key=' + apiKey,
+      KO1K_3L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/KO1K3!A2:G?key=' + apiKey,
+      KO2K_3L: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/KO2K3!A2:G?key=' + apiKey,
       Patibayan1: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/Patibayan1!A2:I?key=' + apiKey,
       Patibayan2: 'https://sheets.googleapis.com/v4/spreadsheets/19wLVtg4FcABUMP94WmcQofDrWQPEQMbY7guTtoHlYVY/values/Patibayan2!A2:I?key=' + apiKey,
     };
