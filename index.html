@@ -313,6 +313,11 @@ header {
 <!-- Search bar -->
 <input type="text" id="search" placeholder="Search..." oninput="filterResults()">
 
+  <!-- Loading Indicator -->
+  <div id="loadingIndicator" style="display: none;">
+    <img src="https://media.tenor.com/zxJMTNCOhbkAAAAM/pegion.gif" alt="Loading...">
+  </div>
+  
 <div class="results-table-container">
   <table class="results-table" id="resultsTable">
     <thead id="tableHeader">
@@ -323,14 +328,6 @@ header {
     </tbody>
   </table>
 </div>
-
-
-
-
-  <!-- Loading Indicator -->
-  <div id="loadingIndicator" style="display: none;">
-    <img src="https://media.tenor.com/zxJMTNCOhbkAAAAM/pegion.gif" alt="Loading...">
-  </div>
 
   <!-- Results table -->
   <table class="results-table" id="resultsTable">
